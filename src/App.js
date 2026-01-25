@@ -17,7 +17,7 @@ function App() {
     setResult(null);
 
     try {
-      const response = await fetch('http://localhost:5000/api/classify-disease', {
+      const response = await fetch('https://mrrecodsai-backend.onrender.com/api/classify-disease', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ diseaseName: query }),
