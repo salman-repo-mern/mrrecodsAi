@@ -142,7 +142,7 @@ body {
   position: fixed;
   bottom: 12px;
   right: 16px;
-  font-size: 24px;
+  font-size: 15px;
   color: #878585;
   padding: 6px 10px;
   text-align: center;
@@ -153,6 +153,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 600;
-  font-size: 30px;
+  font-size: 20px;
   text-align: center;
 }

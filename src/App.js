@@ -15,6 +15,7 @@ function App() {
     setLoading(true);
     setError(null);
     setResult(null);
+    console.log("KEY:", process.env.GEMINI_API_KEY);
 
     try {
       const response = await fetch('https://mrrecodsai-backend.onrender.com/api/classify-disease', {
@@ -39,6 +40,7 @@ function App() {
       <header className="header">
         <h1>Search Speciality</h1>
       </header>
+
 
       <form className="search-box" onSubmit={handleSearch}>
         <input
