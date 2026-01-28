@@ -11,14 +11,13 @@ function App() {
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
-
     setLoading(true);
     setError(null);
     setResult(null);
-    console.log("KEY:", process.env.GEMINI_API_KEY);
+
 
     try {
-      const response = await fetch('https://mrrecodsai-backend.onrender.com/api/classify-disease', {
+      const response = await fetch('https://mrrecodsai-backend-1.onrender.com/api/classify-disease', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ diseaseName: query }),
@@ -40,8 +39,6 @@ function App() {
       <header className="header">
         <h1>Search Speciality</h1>
       </header>
-
-
       <form className="search-box" onSubmit={handleSearch}>
         <input
           type="text"
