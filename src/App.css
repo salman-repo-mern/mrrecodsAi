@@ -156,3 +156,79 @@ body {
   font-size: 20px;
   text-align: center;
 }
+
+/* 1. Define Theme Variables */
+:root {
+  --bg-color: #f4f7f9;
+  --text-color: #333;
+  --card-bg: #ffffff;
+  --input-border: #e5e7eb;
+  --header-color: #1a56db;
+  --subtext-color: #6b7280;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --accent-color: #01ff05; 
+}
+
+[data-theme='dark'] {
+  --bg-color: #121212; 
+  --text-color: #f5f5f5;
+  --card-bg: #1c1c1c;
+  --input-border: #342d2d;
+  --header-color: #00ffff; 
+  --subtext-color: #f7ff0b; 
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.header h1 {
+  color: var(--header-color);
+  margin-bottom: 5px;
+}
+
+.header p {
+  color: var(--subtext-color);
+}
+
+.search-box {
+  background: var(--card-bg);
+  border: 1px solid var(--input-border);
+  box-shadow: var(--shadow);
+}
+
+.search-box input {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--input-border);
+}
+
+.result-card {
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: 1px solid var(--header-color);
+  color: var(--header-color);
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.theme-toggle:hover {
+  background: var(--header-color);
+  color: var(--bg-color);
+}
+
