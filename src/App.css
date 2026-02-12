@@ -232,3 +232,112 @@ body {
   color: var(--bg-color);
 }
 
+/* 1. Positioned in the very top right corner */
+.toggle-container {
+  position: absolute;
+  top: 25px; /* Spaced from the top */
+  right: 25px; /* Spaced from the right */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 1000;
+}
+
+/* 2. Bigger, bolder label */
+.toggle-label {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--header-color);
+  min-width: 50px;
+}
+
+/* 3. Larger Switch Dimensions */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 64px;  /* Increased width */
+  height: 32px; /* Increased height */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 4. The Slider Track */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d1d5db;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 5. The Sliding Circle (The Knob) */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 24px; /* Bigger knob */
+  width: 24px;  /* Bigger knob */
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 6. Active States */
+input:checked + .slider {
+  background-color: var(--header-color);
+  /* Added a glow effect for dark mode */
+  box-shadow: 0 0 15px var(--header-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(32px); /* Adjusted for wider track */
+}
+
+/* Customizing the track for dark mode specifically */
+[data-theme='dark'] .slider {
+  background-color: #2d2d2d;
+  border: 1px solid var(--header-color);
+}
+
+/* Responsive adjustment for small screens */
+@media (max-width: 480px) {
+  .toggle-container {
+    top: 15px;
+    right: 15px;
+    transform: scale(0.9); /* Slightly smaller on mobile */
+  }
+}
+
+/* Red validation text */
+.validation-message {
+  color: #dc2626; /* Red color */
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-left: 5px;
+  animation: shake 0.2s ease-in-out;
+}
+
+/* Optional: Red border for the input box when error occurs */
+.input-error-border {
+  border: 1px solid #dc2626 !important;
+}
+
+/* Subtle shake animation to grab attention */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}

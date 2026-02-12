@@ -7,9 +7,10 @@ function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Dark Mode State
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // New state for empty input validation
+  const [inputError, setInputError] = useState(false);
 
   // Toggle Theme Effect
   useEffect(() => {
@@ -18,7 +19,17 @@ function App() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!query.trim()) return;
+
+    // Check if search box is empty
+    if (!query.trim()) {
+      setInputError(true);
+      setResult(null);
+      setError(null);
+      return;
+    }
+
+    // Reset states for a valid search
+    setInputError(false);
     setLoading(true);
     setError(null);
     setResult(null);
@@ -42,26 +53,43 @@ function App() {
 
   return (
     <div className="container">
-      {/* Theme Toggle Button */}
-      <button className="theme-toggle" onClick={() => setIsDarkMode(!isDarkMode)}>
-        {isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
-      </button>
+      <div className="toggle-container">
+        <span className="toggle-label">{isDarkMode ? '🌙 DARK ' : '☀️ LIGHT'}</span>
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={isDarkMode}
+            onChange={() => setIsDarkMode(!isDarkMode)}
+          />
+          <span className="slider round"></span>
+        </label>
+      </div>
 
       <header className="header">
         <h1>Search Speciality</h1>
       </header>
 
-      <form className="search-box" onSubmit={handleSearch}>
+      <form className={`search-box ${inputError ? 'input-error-border' : ''}`} onSubmit={handleSearch}>
         <input
           type="text"
           placeholder="Enter disease name (e.g. Hypertension)..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            if (inputError) setInputError(false); // Remove error when user starts typing
+          }}
         />
         <button type="submit" disabled={loading}>
           {loading ? "Searching..." : "Identify"}
         </button>
       </form>
+
+      {/* Red validation message for empty input */}
+      {inputError && (
+        <div className="validation-message">
+          Please enter a disease name
+        </div>
+      )}
 
       {error && <div className="error-message">{error}</div>}
 
@@ -70,7 +98,7 @@ function App() {
           <Oval
             height={90}
             width={90}
-            color={isDarkMode ? "#00ffff" : "#f4f4f4"}
+            color={isDarkMode ? "#00ffff" : "#1a56db"}
             secondaryColor="#01ff05"
             strokeWidth={2}
           />
@@ -97,4 +125,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
