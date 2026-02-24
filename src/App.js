@@ -7,10 +7,20 @@ function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // New state for empty input validation
   const [inputError, setInputError] = useState(false);
+
+
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme === "dark";
+  });;
+
+  useEffect(() => {
+    const theme = isDarkMode ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [isDarkMode]);
+
 
   // Toggle Theme Effect
   useEffect(() => {
