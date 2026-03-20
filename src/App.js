@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Oval } from "react-loader-spinner";
+import ParticlesBackground from './ParticlesBackground';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -62,75 +62,106 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <div className="toggle-container">
-        <span className="toggle-label">{isDarkMode ? '🌙 DARK ' : '☀️ LIGHT'}</span>
-        <label className="switch">
+    <div className="app-wrapper">
+      <ParticlesBackground isDarkMode={isDarkMode} />
+      <div className="container">
+        <div className="toggle-container">
+          <span className="toggle-label">{isDarkMode ? '🌙 DARK ' : '☀️ LIGHT'}</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={() => setIsDarkMode(!isDarkMode)}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
+
+        <header className="header">
+          <h1>Search Speciality</h1>
+        </header>
+
+        <form className={`search-box ${inputError ? 'input-error-border' : ''}`} onSubmit={handleSearch}>
+          <div className="search-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
           <input
-            type="checkbox"
-            checked={isDarkMode}
-            onChange={() => setIsDarkMode(!isDarkMode)}
+            type="text"
+            placeholder="Search for a disease diagnosis..."
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              if (inputError) setInputError(false); // Remove error when user starts typing
+            }}
           />
-          <span className="slider round"></span>
-        </label>
-      </div>
+          <button type="submit" disabled={loading} className="search-btn">
+            {loading ? (
+              <span className="btn-text">Searching...</span>
+            ) : (
+              <>
+                <span className="btn-text">Identify</span>
+                <svg className="btn-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </>
+            )}
+          </button>
+        </form>
 
-      <header className="header">
-        <h1>Search Speciality</h1>
-      </header>
+        {/* Red validation message for empty input */}
+        {inputError && (
+          <div className="validation-message">
+            Please enter a disease name
+          </div>
+        )}
 
-      <form className={`search-box ${inputError ? 'input-error-border' : ''}`} onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Enter disease name (e.g. Hypertension)..."
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            if (inputError) setInputError(false); // Remove error when user starts typing
-          }}
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Searching..." : "Identify"}
-        </button>
-      </form>
+        {error && <div className="error-message">{error}</div>}
 
-      {/* Red validation message for empty input */}
-      {inputError && (
-        <div className="validation-message">
-          Please enter a disease name
-        </div>
-      )}
-
-      {error && <div className="error-message">{error}</div>}
-
-      {loading ? (
-        <div className="loader-container">
-          <Oval
-            height={90}
-            width={90}
-            color={isDarkMode ? "#00ffff" : "#1a56db"}
-            secondaryColor="#01ff05"
-            strokeWidth={2}
-          />
-        </div>
-      ) : (
-        result && (
-          <div className="result-card">
-            <div className="card-header">
-              <h2>{result.disease}</h2>
-            </div>
-            <div className="card-body">
-              <div className="info-item">
-                <label>Medical Specialty</label>
-                <p>{result.specialty}</p>
+        {loading ? (
+          <div className="loader-container">
+            <svg className="ecg-loader" viewBox="0 0 200 100">
+              <polyline
+                className="ecg-line"
+                points="0,50 60,50 70,30 80,70 90,10 100,90 110,30 120,50 200,50"
+              />
+            </svg>
+            <div className="loading-text">Analyzing disease...</div>
+          </div>
+        ) : (
+          result && (
+            <div className="result-card">
+              <div className="card-header">
+                <div className="header-icon-title">
+                  <div className="medical-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                  </div>
+                  <h2>{result.disease}</h2>
+                </div>
+              </div>
+              <div className="card-body">
+                <div className="info-item hover-effect">
+                  <div className="info-item-icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                  </div>
+                  <div className="info-text">
+                    <label>Recommended Specialty</label>
+                    <p>{result.specialty}</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        )
-      )}
+          )
+        )}
 
-      <div className="credit">
-        Designed & Developed <br /> By <span>Salman</span>
+        <div className="credit">
+          Designed & Developed <br /> By <span>Salman</span>
+        </div>
       </div>
     </div>
   );
